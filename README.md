@@ -39,22 +39,26 @@ Standard linear regression models are estimated using `statsmodels` in Python.
 
 ## Project Structure
 
+```
 inequality-trust-europe/
 │
 ├── data/
-│ ├── raw/ # Original ESS and macro data
-│ ├── processed/ # Cleaned and merged datasets
+│   ├── raw/                # Original ESS and macro datasets
+│   └── processed/          # Cleaned and merged datasets
 │
 ├── notebooks/
-│ ├── 01_data_prep.ipynb # Data cleaning and merging
-│ ├── 02_analysis.ipynb # Regression and visualization
+│   ├── 01_data_prep.ipynb  # Data cleaning and merging
+│   ├── 02_analysis.ipynb   # Regression analysis and visualization
+│   └── archive_original_code.ipynb
 │
 ├── results/
-│ ├── figures/ # Generated plots
-│ ├── tables/ # Regression outputs
+│   ├── figures/            # Generated plots
+│   └── tables/             # Regression outputs
 │
-├── requirements.txt
-└── README.md
+├── requirements.txt        # Python dependencies
+└── README.md               # Project overview
+```
+
 
 
 ---
