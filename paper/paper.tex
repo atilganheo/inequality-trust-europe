@@ -1,0 +1,483 @@
+\documentclass[12pt,a4paper]{article}
+
+% ── Packages ──
+\usepackage[top=2.5cm, bottom=2.5cm, left=2.5cm, right=2.5cm, headheight=14.5pt]{geometry}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+% \usepackage{lmodern}  % use default Computer Modern
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{setspace}
+\usepackage{natbib}
+\usepackage{float}
+\usepackage{caption}
+\usepackage{subcaption}
+\usepackage[hidelinks]{hyperref}
+\usepackage{xcolor}
+\usepackage{enumitem}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{abstract}
+
+% ── Page style ──
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\small\itshape Income Inequality, Economic Development, and Interpersonal Trust}
+\fancyhead[R]{\small\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\fancypagestyle{plain}{%
+  \fancyhf{}
+  \fancyfoot[C]{\small\thepage}
+  \renewcommand{\headrulewidth}{0pt}
+}
+
+% ── Spacing ──
+\onehalfspacing
+
+% ── Section formatting ──
+\titleformat{\section}{\large\bfseries}{\thesection}{1em}{}
+\titleformat{\subsection}{\normalsize\bfseries}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}{\normalsize\itshape}{\thesubsubsection}{1em}{}
+\titlespacing*{\section}{0pt}{2.5ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+\titlespacing*{\subsection}{0pt}{2ex plus 1ex minus .2ex}{1ex plus .2ex}
+
+% ── Caption style ──
+\captionsetup{font=small, labelfont=bf, labelsep=period, skip=8pt}
+\captionsetup[table]{position=top, skip=6pt}
+
+% ── Abstract style ──
+\renewcommand{\abstractnamefont}{\normalfont\bfseries}
+\renewcommand{\abstracttextfont}{\normalfont\small}
+
+% ── Hyperref setup ──
+\hypersetup{
+  pdftitle={Income Inequality, Economic Development, and Interpersonal Trust in Europe},
+  pdfauthor={Cesur Atilgan Hacieyupoglu},
+  pdfsubject={European Social Survey, Interpersonal Trust, Gini Coefficient},
+  colorlinks=false,
+  pdfborder={0 0 0}
+}
+
+% ── Custom note command for tables ──
+\newcommand{\tabnote}[1]{\par\vspace{4pt}{\footnotesize\textit{Notes:} #1}}
+
+%══════════════════════════════════════════════════════════════════
+\begin{document}
+
+% ── Title page ──
+\thispagestyle{plain}
+
+\begin{center}
+  \vspace*{1cm}
+  {\LARGE\bfseries Income Inequality, Economic Development, and\\[6pt]
+  Interpersonal Trust in Europe}\\[1.2cm]
+  {\large Evidence from the European Social Survey (Round~11, 2023)}\\[1.5cm]
+  {\large Cesur At{\i}lgan Hac{\i}ey\"{u}po\u{g}lu}\\[2cm]
+  \today
+  \vspace*{1.5cm}
+\end{center}
+
+\begin{abstract}
+\noindent
+This paper examines the relationship between income inequality, economic development, and interpersonal trust across European countries using data from the European Social Survey (Round~11, 2023) combined with macroeconomic indicators from Eurostat. Interpersonal trust is measured through a composite index constructed from three survey items capturing generalized trust, perceived fairness, and helpfulness. Country-level inequality is proxied by the Gini coefficient, while economic development is measured using GDP per capita in Purchasing Power Standard~(PPS).
+
+The analysis proceeds in two stages. First, individual-level regressions with clustered standard errors are estimated to assess the association between inequality and trust while controlling for age, gender, and education. Second, country-level regressions are conducted using average national trust to align macroeconomic variation with the unit of analysis.
+
+Descriptive evidence indicates a negative correlation between inequality and trust. However, once GDP per capita is included in the regression models, the inequality coefficient becomes statistically insignificant. In contrast, GDP per capita remains positive and statistically significant across all specifications, including log-linear models and country-level regressions. Overall, the findings suggest that cross-national differences in interpersonal trust within Europe are more strongly associated with levels of economic development than with income inequality per se.
+
+\medskip
+\noindent\textbf{Keywords:} interpersonal trust, economic development, income inequality, Gini coefficient, European Social Survey, GDP per capita
+
+\medskip
+\noindent\textbf{JEL Codes:} D31, O15, Z13
+\end{abstract}
+
+\newpage
+
+%══════════════════════════════════════════════════════════════════
+\section{Introduction}
+\label{sec:introduction}
+
+Interpersonal trust is widely considered a fundamental component of social and economic development. Societies characterized by higher levels of generalized trust tend to exhibit stronger institutions, more effective governance, lower transaction costs, and higher levels of economic cooperation. Understanding the determinants of interpersonal trust therefore remains a central question in political economy and social science research. Previous research has linked generalized trust to institutional quality and economic performance \citep{putnam1993, knack1997}. Other studies argue that income inequality erodes social cohesion and trust \citep{wilkinson2009}.
+
+One prominent hypothesis argues that income inequality erodes trust. Theoretical accounts suggest that unequal societies foster social distance, perceived unfairness, and weakened social cohesion, all of which may reduce individuals' willingness to trust others. A large body of cross-country and survey-based research has documented negative correlations between inequality and trust. However, inequality often coexists with other structural country characteristics---most notably economic development---which may also shape trust outcomes. Disentangling the role of economic development from that of inequality is therefore essential. This raises an important empirical question:
+
+\begin{quote}
+\itshape To what extent is interpersonal trust in European countries associated with economic development?
+\end{quote}
+
+To investigate this question, this study combines individual-level data from the European Social Survey (ESS Round~11, 2023) with country-level macroeconomic indicators from Eurostat, including the Gini coefficient and GDP per capita (Purchasing Power Standard). Interpersonal trust is measured using a composite index constructed from three survey questions capturing generalized trust, perceived fairness, and helpfulness.
+
+Using a cross-sectional sample of nearly 40,000 individuals across European countries, this paper estimates the association between inequality and trust while controlling for individual-level characteristics such as age, gender, and education. Standard errors are clustered at the country level to account for shared macroeconomic environments.
+
+The results show that while inequality is negatively correlated with trust at the descriptive level, its association becomes statistically insignificant once GDP per capita is included in the model. In contrast, economic development remains a robust and significant predictor of interpersonal trust across specifications. These findings suggest that cross-country differences in trust within Europe are more strongly related to levels of economic development than to inequality per se.
+
+The remainder of the paper proceeds as follows. Section~\ref{sec:data} describes the data and variable construction. Section~\ref{sec:strategy} outlines the empirical strategy. Section~\ref{sec:results} presents the main results and robustness checks. Section~\ref{sec:discussion} concludes with a discussion of implications and limitations.
+
+%══════════════════════════════════════════════════════════════════
+\section{Data and Variable Construction}
+\label{sec:data}
+
+\subsection{Data Sources}
+
+This study combines individual-level survey data with country-level macroeconomic indicators to examine the relationship between income inequality, economic development, and interpersonal trust.
+
+Individual-level data are drawn from Round~11 (2023) of the European Social Survey~(ESS). The ESS is a biennial cross-national survey that collects high-quality, harmonized data on social attitudes, values, and demographic characteristics across European countries. The survey employs rigorous probability sampling methods to ensure national representativeness and comparability across countries. Round~11 includes approximately 40,000 respondents across multiple European countries.
+
+Country-level macroeconomic data are obtained from Eurostat. Two primary macro indicators are used: (i)~the Gini coefficient of equivalised disposable income, which measures income inequality within each country; and (ii)~GDP per capita in Purchasing Power Standard~(PPS), which captures economic development adjusted for price level differences across countries. Both macroeconomic variables correspond to the year 2023 in order to align temporally with the ESS survey wave.
+
+The micro and macro datasets are merged using country identifiers, resulting in a combined dataset in which each individual observation is matched with the macroeconomic characteristics of their country of residence.
+
+\subsection{Dependent Variable: Interpersonal Trust}
+
+The dependent variable in this study is a composite index of generalized interpersonal trust constructed from three ESS survey questions:
+\begin{enumerate}[leftmargin=2em]
+  \item ``Generally speaking, would you say that most people can be trusted, or that you can't be too careful in dealing with people?''
+  \item ``Do you think that most people would try to take advantage of you if they got the chance, or would they try to be fair?''
+  \item ``Would you say that most of the time people try to be helpful, or that they are mostly looking out for themselves?''
+\end{enumerate}
+
+Each item is measured on an 11-point scale ranging from 0 to 10, where higher values indicate greater levels of trust, fairness, or perceived helpfulness. Following standard practice in the literature, a trust index is constructed as the unweighted average of the three items:
+\begin{equation}
+\label{eq:trust_index}
+\text{TrustIndex}_i = \frac{\textit{ppltrst}_i + \textit{pplfair}_i + \textit{pplhlp}_i}{3}
+\end{equation}
+
+The resulting index ranges from 0 to 10, with higher values reflecting greater generalized interpersonal trust. Missing and special response codes (e.g., ``Don't know'' or refusal) are treated as missing values prior to index construction.
+
+\subsection{Key Independent Variables}
+
+\paragraph{Income Inequality.} Income inequality is measured using the Gini coefficient, obtained from Eurostat. The Gini coefficient ranges from 0 (perfect equality) to 100 (perfect inequality), although in European countries it typically ranges between approximately 23 and~38. Higher values indicate greater income dispersion within a country.
+
+\paragraph{Economic Development.} Economic development is captured by GDP per capita in Purchasing Power Standard~(PPS). The PPS adjustment ensures comparability across countries by accounting for differences in price levels. In robustness analyses, the natural logarithm of GDP per capita is used to reduce skewness and facilitate elasticity-style interpretation.
+
+\subsection{Control Variables}
+
+To account for individual-level heterogeneity, the analysis includes the following demographic controls: age (continuous variable), gender (binary indicator), and education level, measured using the International Standard Classification of Education~(ISCED). Education is included as a categorical variable to allow for non-linear effects across attainment levels. These variables are standard controls in the trust literature and help mitigate omitted variable bias by accounting for individual characteristics known to influence interpersonal trust.
+
+\subsection{Final Sample}
+
+After merging the ESS microdata with Eurostat macro indicators and excluding observations with missing values on key variables, the final analytical sample consists of 39,641 individuals across multiple European countries. Standard errors in all regression models are clustered at the country level to account for intra-country correlation arising from shared macroeconomic environments.
+
+%══════════════════════════════════════════════════════════════════
+\section{Empirical Strategy}
+\label{sec:strategy}
+
+\subsection{Baseline Specification}
+
+The primary empirical objective is to estimate the association between country-level income inequality and individual-level interpersonal trust, while accounting for economic development and individual characteristics. The baseline regression model is specified as:
+\begin{equation}
+\label{eq:baseline}
+\text{Trust}_{i,c} = \beta_0 + \beta_1 \, \text{Gini}_c + \beta_2 \, \text{GDP}_c + \varepsilon_{i,c}
+\end{equation}
+where $\text{Trust}_{i,c}$ denotes the trust index of individual~$i$ in country~$c$, $\text{Gini}_c$ is the country-level Gini coefficient, $\text{GDP}_c$ is GDP per capita~(PPS), and $\varepsilon_{i,c}$ is the error term. This specification captures the unconditional association between macroeconomic inequality, development, and interpersonal trust.
+
+\subsection{Extended Model with Individual Controls}
+
+To account for individual-level heterogeneity, the baseline model is extended by including demographic controls:
+\begin{equation}
+\label{eq:extended}
+\text{Trust}_{i,c} = \beta_0 + \beta_1 \, \text{Gini}_c + \beta_2 \, \text{GDP}_c + \boldsymbol{\gamma}' \mathbf{X}_{i,c} + \varepsilon_{i,c}
+\end{equation}
+where $\mathbf{X}_{i,c}$ is a vector of individual characteristics including age, gender, and education level. Including these controls helps mitigate omitted variable bias arising from compositional differences across countries. For example, education levels and age distributions may differ systematically across countries and are known predictors of interpersonal trust.
+
+\subsection{Alternative Specification Without GDP}
+
+To assess whether the inequality effect is robust to the inclusion of economic development, an alternative specification excludes GDP:
+\begin{equation}
+\label{eq:nogdp}
+\text{Trust}_{i,c} = \beta_0 + \beta_1 \, \text{Gini}_c + \boldsymbol{\gamma}' \mathbf{X}_{i,c} + \varepsilon_{i,c}
+\end{equation}
+Comparing this model to the full specification allows us to evaluate whether the inequality--trust relationship is mediated or confounded by economic development.
+
+\subsection{Log-Linear Specification}
+
+Given the skewed distribution of GDP per capita, a log-linear specification is estimated as a robustness check:
+\begin{equation}
+\label{eq:loglinear}
+\text{Trust}_{i,c} = \beta_0 + \beta_1 \, \text{Gini}_c + \beta_2 \, \log(\text{GDP}_c) + \boldsymbol{\gamma}' \mathbf{X}_{i,c} + \varepsilon_{i,c}
+\end{equation}
+In this model, $\beta_2$ represents the semi-elasticity of trust with respect to economic development. Specifically, a 1\% increase in GDP per capita is associated with approximately $\beta_2 / 100$ units change in the trust index.
+
+\subsection{Estimation Method}
+
+All models are estimated using Ordinary Least Squares~(OLS). Since inequality and GDP vary at the country level while trust is measured at the individual level, standard errors are clustered at the country level to account for within-country correlation. This adjustment ensures correct inference in the presence of shared macroeconomic environments among individuals in the same country.
+
+\subsection{Interpretation Strategy}
+
+The empirical strategy focuses on three key comparisons: (1)~whether the coefficient on $\text{Gini}_c$ is statistically significant in the absence of GDP; (2)~whether the inequality coefficient remains significant after controlling for GDP; and (3)~whether GDP per capita exhibits a stable and robust association with trust across specifications. These comparisons allow us to evaluate whether inequality independently predicts interpersonal trust or whether the observed relationship is largely explained by differences in economic development across countries.
+
+%══════════════════════════════════════════════════════════════════
+\section{Results}
+\label{sec:results}
+
+\subsection{Descriptive Evidence}
+
+We begin by examining the descriptive relationships between interpersonal trust, income inequality, and economic development. At the country level, the correlation between trust and the Gini coefficient is negative ($-0.17$), indicating that more unequal countries tend to exhibit lower levels of generalized trust.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth]{figure1.png}
+  \caption{Country-level trust versus income inequality (Gini coefficient), 2023. The fitted line indicates a moderate negative relationship between inequality and average interpersonal trust.}
+  \label{fig:trust_gini}
+\end{figure}
+
+As shown in Figure~\ref{fig:trust_gini}, more unequal countries tend to exhibit lower levels of trust, although the relationship appears moderate. In contrast, trust is positively correlated with GDP per capita ($+0.27$), suggesting that richer countries display higher average levels of interpersonal trust. Importantly, GDP per capita and inequality are moderately negatively correlated ($-0.36$), indicating that richer countries in the sample also tend to be more equal.
+
+\begin{figure}[H]
+  \centering
+  \includegraphics[width=0.78\textwidth]{figure2.png}
+  \caption{Country-level trust versus GDP per capita (PPS), 2023. The positive relationship between economic development and trust appears stronger and more systematic than the inequality--trust association.}
+  \label{fig:trust_gdp}
+\end{figure}
+
+Country-level scatterplots further illustrate these relationships (Figure~\ref{fig:trust_gdp}). While both inequality and GDP appear visually associated with trust, the positive relationship between GDP and trust appears somewhat stronger and more systematic. These descriptive patterns motivate a multivariate analysis to disentangle the independent effects of inequality and development.
+
+%──────────────────────────────────────────────────────
+\subsection{Baseline Regression Results}
+
+Table~\ref{tab:baseline} presents the baseline regression results including both inequality and GDP per capita. When controlling only for macroeconomic variables, income inequality is negatively associated with interpersonal trust. However, once GDP per capita and individual-level controls are included, the coefficient on the Gini coefficient becomes statistically insignificant.
+
+\begin{table}[H]
+\centering
+\caption{Individual-Level OLS: Trust, Inequality, and Economic Development (ESS 2023)}
+\label{tab:baseline}
+\smallskip
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Variable & Coefficient & Std.\ Error & $p$-value \\
+\midrule
+Gini (inequality)       & $-0.0455$       & (0.0354) & 0.198 \\
+GDP per capita (PPS)    & $0.0118^{***}$  & (0.0043) & 0.006 \\
+Age                     & $-0.0005^{***}$ & (0.0002) & 0.004 \\
+Female                  & $0.0427$        & (0.0438) & 0.330 \\
+Education controls      & \multicolumn{3}{c}{Included} \\
+\midrule
+Observations            & \multicolumn{3}{c}{39,641} \\
+$R^2$                   & \multicolumn{3}{c}{0.112} \\
+\bottomrule
+\end{tabular}
+\tabnote{Standard errors clustered by country in parentheses. $^{***}\,p<0.01$, $^{**}\,p<0.05$, $^{*}\,p<0.10$.}
+\end{table}
+
+In the full specification with controls (Equation~\ref{eq:extended}), the estimated coefficient on inequality is $\hat{\beta}_1 = -0.0455$ ($p = 0.198$). This indicates that, holding economic development and individual characteristics constant, a one-point increase in the Gini coefficient is associated with a 0.045 decrease in the trust index. However, the coefficient is not statistically distinguishable from zero at conventional levels.
+
+In contrast, GDP per capita remains positive and statistically significant: $\hat{\beta}_2 = 0.0118$ ($p = 0.006$). This suggests that higher levels of economic development are robustly associated with higher levels of interpersonal trust.
+
+%──────────────────────────────────────────────────────
+\subsection{Inequality Without Controlling for GDP}
+
+To assess whether inequality predicts trust in the absence of development controls, GDP per capita is excluded from the model (Equation~\ref{eq:nogdp}). In this specification, the estimated coefficient on inequality becomes $\hat{\beta}_1 = -0.0890$ ($p = 0.046$).
+
+\begin{table}[H]
+\centering
+\caption{Individual-Level OLS: Inequality Without GDP}
+\label{tab:nogdp}
+\smallskip
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Variable & Coefficient & Std.\ Error & $p$-value \\
+\midrule
+Gini (inequality) & $-0.0890^{**}$  & (0.0446) & 0.046 \\
+Age               & $-0.0006^{***}$ & (0.0002) & 0.000 \\
+Female            & $0.0314$        & (0.0444) & 0.479 \\
+Education controls & \multicolumn{3}{c}{Included} \\
+\midrule
+Observations      & \multicolumn{3}{c}{39,641} \\
+$R^2$             & \multicolumn{3}{c}{0.070} \\
+\bottomrule
+\end{tabular}
+\tabnote{Standard errors clustered by country in parentheses. $^{***}\,p<0.01$, $^{**}\,p<0.05$, $^{*}\,p<0.10$.}
+\end{table}
+
+This result indicates that inequality is statistically significant at the 5\% level when GDP is omitted. Substantively, a 10-point increase in the Gini coefficient is associated with nearly a 0.9-point decrease in the trust index (on a 0--10 scale), which represents a meaningful difference. However, the loss of significance once GDP is included suggests that the inequality--trust relationship is not robust and may reflect underlying differences in economic development across countries.
+
+%──────────────────────────────────────────────────────
+\subsection{Log-Linear Specification}
+
+As a robustness check, GDP per capita is entered in logarithmic form (Equation~\ref{eq:loglinear}). The results confirm earlier findings.
+
+\begin{table}[H]
+\centering
+\caption{Individual-Level OLS: Log GDP Specification}
+\label{tab:loggdp}
+\smallskip
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Variable & Coefficient & Std.\ Error & $p$-value \\
+\midrule
+Gini (inequality)  & $-0.0340$        & (0.0306) & 0.266 \\
+Log GDP per capita & $1.5374^{***}$   & (0.3606) & 0.000 \\
+Age                & $-0.0005^{**}$   & (0.0002) & 0.010 \\
+Female             & $0.0463$         & (0.0422) & 0.272 \\
+Education controls & \multicolumn{3}{c}{Included} \\
+\midrule
+Observations       & \multicolumn{3}{c}{39,641} \\
+$R^2$              & \multicolumn{3}{c}{0.122} \\
+\bottomrule
+\end{tabular}
+\tabnote{Standard errors clustered by country in parentheses. $^{***}\,p<0.01$, $^{**}\,p<0.05$, $^{*}\,p<0.10$.}
+\end{table}
+
+The coefficient on inequality remains negative but statistically insignificant ($\hat{\beta}_1 = -0.0340$, $p = 0.266$), while log GDP per capita is positive and highly significant ($\hat{\beta}_2 = 1.5374$, $p < 0.001$). This implies that a 10\% increase in GDP per capita is associated with approximately a 0.15-point increase in the trust index. The stability of the GDP effect across specifications reinforces the conclusion that economic development plays a central role in explaining cross-country variation in trust.
+
+%──────────────────────────────────────────────────────
+\subsection{Individual-Level Controls}
+
+Across all specifications, education exhibits a strong and monotonic positive association with trust. Individuals with higher educational attainment report substantially higher levels of interpersonal trust, consistent with prior research linking education to civic engagement and social capital formation. Gender does not appear to have a statistically significant association with trust once other factors are controlled for. Age shows a statistically significant but economically small negative effect.
+
+%──────────────────────────────────────────────────────
+\subsection{Country-Level Evidence}
+
+Because income inequality and GDP per capita vary only at the country level, the effective macroeconomic variation in the dataset is determined by the number of countries rather than the number of individual respondents. Although individual-level regressions with clustered standard errors account for within-country correlation, the identification of macroeconomic effects ultimately relies on cross-country differences. To address this explicitly, a country-level analysis was conducted using average trust per country as the dependent variable.
+
+Country-level trust was calculated as the mean of the individual trust index within each country. This produces a dataset of 24 countries, matching the number of European countries included in ESS Round~11 (2023). The following specification was estimated:
+\begin{equation}
+\label{eq:country}
+\overline{\text{Trust}}_c = \alpha + \beta_1 \, \text{Gini}_c + \beta_2 \, \text{GDP}_c + u_c
+\end{equation}
+where $\overline{\text{Trust}}_c$ denotes the average trust level in country~$c$, $\text{Gini}_c$ represents the Gini coefficient, and $\text{GDP}_c$ is GDP per capita~(PPS).
+
+\begin{table}[H]
+\centering
+\caption{Country-Level OLS: Average Trust, Inequality, and GDP ($N=24$)}
+\label{tab:country}
+\smallskip
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Variable & Coefficient & Std.\ Error & $p$-value \\
+\midrule
+Gini (inequality)    & $-0.0307$       & (0.0363) & 0.407 \\
+GDP per capita (PPS) & $0.0137^{***}$  & (0.0037) & 0.001 \\
+\midrule
+Observations         & \multicolumn{3}{c}{24} \\
+$R^2$                & \multicolumn{3}{c}{0.469} \\
+\bottomrule
+\end{tabular}
+\tabnote{$^{***}\,p<0.01$, $^{**}\,p<0.05$, $^{*}\,p<0.10$.}
+\end{table}
+
+The results indicate that GDP per capita remains strongly and positively associated with average trust across countries, statistically significant at the 1\% level, while the Gini coefficient is not statistically significant. The model explains approximately 47\% of cross-country variation in trust.
+
+A log-linear specification replacing GDP per capita with $\log(\text{GDP})$ yields similar conclusions.
+
+\begin{table}[H]
+\centering
+\caption{Country-Level OLS: Average Trust and Log GDP ($N=24$)}
+\label{tab:country_log}
+\smallskip
+\begin{tabular}{@{}lccc@{}}
+\toprule
+Variable & Coefficient & Std.\ Error & $p$-value \\
+\midrule
+Gini (inequality)  & $-0.0206$       & (0.0344) & 0.555 \\
+Log GDP per capita & $1.7117^{***}$  & (0.3977) & 0.000 \\
+\midrule
+Observations       & \multicolumn{3}{c}{24} \\
+$R^2$              & \multicolumn{3}{c}{0.536} \\
+\bottomrule
+\end{tabular}
+\tabnote{$^{***}\,p<0.01$, $^{**}\,p<0.05$, $^{*}\,p<0.10$.}
+\end{table}
+
+These findings reinforce the earlier individual-level results. The consistency across micro-level and macro-level specifications suggests that the dominance of GDP is not driven by the large individual sample size but reflects genuine cross-country structural patterns. Within the European context in 2023, economic development appears to be the primary macro-level correlate of interpersonal trust, whereas income inequality does not exhibit an independent association once development is taken into account.
+
+%──────────────────────────────────────────────────────
+\subsection{Summary of Findings}
+
+The empirical results yield three main findings:
+\begin{enumerate}[leftmargin=2em]
+  \item Income inequality is negatively correlated with trust at the descriptive level.
+  \item However, the inequality effect is not robust to controlling for economic development.
+  \item GDP per capita is a stable and significant predictor of interpersonal trust across all specifications.
+\end{enumerate}
+
+Taken together, the evidence suggests that differences in economic development across European countries play a more central role in explaining interpersonal trust than income inequality per se.
+
+%══════════════════════════════════════════════════════════════════
+\section{Discussion}
+\label{sec:discussion}
+
+\subsection{Interpretation}
+
+This study examined the extent to which interpersonal trust in European countries is associated with economic development, and whether income inequality retains an independent role once development is accounted for.
+
+The results indicate that income inequality is negatively correlated with trust at the descriptive level. Countries with higher Gini coefficients tend to exhibit lower average levels of interpersonal trust. However, this relationship is not robust once GDP per capita is included in the model. In contrast, economic development remains a strong and statistically significant predictor of trust across all specifications.
+
+These findings suggest that the observed inequality--trust relationship may largely reflect underlying differences in economic development rather than an independent effect of inequality itself. In other words, richer countries tend to have both lower inequality and higher trust, and once development is accounted for, inequality no longer appears to exert a distinct influence.
+
+From a theoretical perspective, this result contributes to ongoing debates in the political economy literature. While many theories emphasize inequality as a driver of social fragmentation and distrust, the present findings indicate that broader structural conditions associated with economic development may play a more fundamental role in shaping interpersonal trust.
+
+Economic development may influence trust through multiple channels, including institutional quality, welfare state capacity, social protection systems, education systems, and overall life stability. These structural factors may foster environments in which generalized trust can flourish, independently of income dispersion levels. At the individual level, education emerges as a strong and consistent predictor of trust, aligning with extensive literature linking educational attainment to social capital, civic norms, and cooperative behavior.
+
+\subsection{Limitations}
+
+While the findings provide informative evidence on the association between income inequality, economic development, and interpersonal trust in Europe, several limitations warrant careful consideration.
+
+\paragraph{Cross-sectional design and causality.} The analysis is cross-sectional and therefore does not establish causal relationships. The reported coefficients reflect associations rather than definitive causal effects. Reverse causality and omitted variable bias remain possible. For example, higher levels of interpersonal trust may themselves contribute to economic development through enhanced cooperation and institutional efficiency. Without temporal variation or exogenous identification strategies, causal interpretation should be avoided.
+
+\paragraph{Limited number of country clusters.} Although the individual-level sample is large ($N \approx 40{,}000$), macroeconomic variables vary only at the country level, and the effective macro-level variation is limited to 24 countries. Since standard errors are clustered at the country level, inference relies on a relatively small number of clusters. In settings with fewer than 30 clusters, cluster-robust standard errors may be downward biased, potentially affecting statistical significance. Consequently, inference regarding macro-level coefficients---particularly the independent role of inequality---should be interpreted with caution.
+
+\paragraph{Multicollinearity between inequality and development.} GDP per capita and income inequality are moderately negatively correlated within the sample. This overlap may introduce multicollinearity, inflating standard errors and complicating the interpretation of independent effects. The loss of statistical significance for the Gini coefficient after including GDP per capita may partially reflect shared cross-country structural variance rather than the absence of a substantive relationship.
+
+\paragraph{Omitted institutional and structural factors.} The model includes only two macroeconomic indicators. However, economic development may proxy for broader institutional and structural characteristics such as governance quality, corruption levels, welfare state capacity, social protection systems, and historical legacies. If these omitted factors influence both economic development and interpersonal trust, the estimated GDP coefficient may capture more than income levels alone. Future research incorporating additional macro-level controls would help disentangle these mechanisms.
+
+\paragraph{Measurement and cross-national comparability.} Although the European Social Survey employs rigorous harmonization procedures, survey-based measures of interpersonal trust may still be influenced by cultural response patterns and contextual interpretation differences across countries. Similarly, the Gini coefficient captures overall income dispersion but does not account for wealth inequality or perceived inequality, which may be more directly linked to social trust.
+
+\medskip
+\noindent Taken together, these limitations suggest that the results should be interpreted as descriptive evidence of cross-country associations within Europe in 2023 rather than definitive evidence regarding the causal determinants of interpersonal trust.
+
+\subsection{Conclusion}
+
+This paper investigated the extent to which interpersonal trust in Europe is associated with economic development, using micro-level survey data combined with macroeconomic indicators.
+
+While inequality is negatively associated with trust at a descriptive level, the effect does not remain statistically significant once economic development is controlled for. GDP per capita, by contrast, exhibits a robust and positive association with interpersonal trust across all specifications.
+
+The findings suggest that cross-country differences in interpersonal trust within Europe are more strongly linked to levels of economic development than to income inequality per se. These results highlight the importance of broader structural conditions in shaping social cohesion and trust. Policies aimed at fostering economic development may indirectly contribute to higher levels of interpersonal trust, although further research is needed to clarify the causal pathways involved.
+
+%══════════════════════════════════════════════════════════════════
+\newpage
+\bibliographystyle{apalike}
+
+\begin{thebibliography}{99}
+
+\bibitem[ESS, 2023]{ess2023}
+European Social Survey (ESS). (2023).
+\textit{ESS Round 11: European Social Survey Round 11 Data}.
+Data file edition 1.0. NSD -- Norwegian Centre for Research Data, Norway.
+
+\bibitem[Eurostat, 2023a]{eurostat2023gini}
+Eurostat. (2023).
+Gini coefficient of equivalised disposable income.
+Retrieved from \url{https://ec.europa.eu/eurostat}
+
+\bibitem[Eurostat, 2023b]{eurostat2023gdp}
+Eurostat. (2023).
+GDP per capita in Purchasing Power Standard (PPS).
+Retrieved from \url{https://ec.europa.eu/eurostat}
+
+\bibitem[Knack and Keefer, 1997]{knack1997}
+Knack, S., \& Keefer, P. (1997).
+Does social capital have an economic payoff? A cross-country investigation.
+\textit{The Quarterly Journal of Economics}, 112(4), 1251--1288.
+
+\bibitem[Putnam, 1993]{putnam1993}
+Putnam, R.\,D. (1993).
+\textit{Making Democracy Work: Civic Traditions in Modern Italy}.
+Princeton University Press.
+
+\bibitem[Wilkinson and Pickett, 2009]{wilkinson2009}
+Wilkinson, R., \& Pickett, K. (2009).
+\textit{The Spirit Level: Why More Equal Societies Almost Always Do Better}.
+Allen Lane.
+
+\bibitem[Zak and Knack, 2001]{zak2001}
+Zak, P.\,J., \& Knack, S. (2001).
+Trust and growth.
+\textit{The Economic Journal}, 111(470), 295--321.
+\url{https://doi.org/10.1111/1468-0297.00609}
+
+\end{thebibliography}
+
+\end{document}
